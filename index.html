@@ -1,0 +1,59 @@
+<html> <!--обозначение html-документа-->
+<title>Список задач</title> <!--заголовок документа-->
+<body> <!--Элемент <body> предназначен для хранения содержания веб-страницы (тела документа), отображаемого в окне браузера-->
+<ol id="todoView"></ol> <!--тег ol нумерованный список (1. 2. 3. и т. д.) -->
+<div id="fields_tast" style="display:none;">
+	Наименование задачи: <input type="text" id="task" value="" class="task" style="border-radius: 10px;"/>
+	Дата постановки задачи: <input type="date" id="date_postanovka_task" value="" class="date_postanovka_task" style="border-radius: 10px;"/>
+	Дата окончания задачи: <input type="date" id="date_end_task" value="" class="date_end_task" style="border-radius: 10px;"/>
+	<input type="button" id="add" value="Добавить задачу" class="knopka" style="border-radius: 10px;"/>
+</div>
+<button id="example_2" style="display='block'; border-radius: 10px;" onclick=" //при нажатии на кнопку происходят следующие события
+	document.getElementById('fields_tast').style.display='block'; //блок example_1 (элементов ввода) появляется
+	document.getElementById('example_2').style.display='none';  //одна кнопка скрывается
+	document.getElementById('add').style.display='block'; //появляется другая кнопка"
+	style="display:none;">Добавить задачу
+</button>
+</body>
+<div>
+<script> 
+  var todos = [] //пустой массив
+  var task = document.getElementById('task') //ссылку на элемент, который имеет атрибут id="task"
+  var date_postanovka_task = document.getElementById('date_postanovka_task') //ссылку на элемент, который имеет атрибут id="date_postanovka_task"
+  var date_end_task = document.getElementById('date_end_task') //ссылку на элемент, который имеет атрибут id="date_end_task"
+  var todoView = document.getElementById('todoView')
+  document.getElementById('add').addEventListener('click', function () { //function () - начало функции для обработки события при нажатии на кнопку
+  //Метод document.getElementById() возвращает ссылку на элемент, который имеет атрибут id с указанным значением.
+  //Метод EventTarget.addEventListener() регистрирует определенный обработчик события, вызванного на EventTarget.
+  //click - тип события при нажатии на кнопку
+    if (todos.filter(t => t.title === task.value).length > 0){ 
+    //Метод filter() создаёт новый массив со всеми элементами, если такое же название задачи не повторяется
+	  alert('Такая задача уже есть') //то выводится сообщение 'Такая задача уже есть' на экран
+    } else if ((task.value === "") || (date_postanovka_task.value === "") || (date_end_task.value === "")) { 
+      //иначе если хотя бы одно из полей пустое
+      alert('Поля не могут быть пустыми') //то выводится сообщение 'Поля не могут быть пустыми' на экран
+    } else { //начало оператора else (иначе)
+      var id = todos.length + 1 //увеличивается длина массива todos на 1 и присваивается идентификатору id
+	  //Метод push() добавляет один или более элементов в конец массива и возвращает новую длину массива.
+      todos.push({  //начало метода добавления элементов в конец массива
+        id,
+        title: task.value,
+        title_begin: date_postanovka_task.value,
+		title_end: date_end_task.value
+      }) //конец метода добавления элементов в конец массива
+	  //Метод document.createElement() позволяет создать и вернуть новый элемент (пустой узел Element) с указанным именем тега.
+      var li = document.createElement('li') //создание элемента с тегом li (тег для элемента списка)
+      var span = document.createElement('span') //создание элемента с тегом li (тег для определения строчных элементов документа)
+      span.innerText = 'Наименование задачи: ' + task.value + ' \nДата постановки задачи: '+ date_postanovka_task.value + ' \nДата окончания задачи: '+ date_end_task.value
+      span.dataset.task = id //Свойство HTMLElement.dataset предоставляет доступ как для чтения, так и для изменения всех пользовательских дата-атрибутов
+      li.append(span) //добавление строчных элементов на начало строки
+      todoView.prepend(li) //добавление строчных элементов на начало строки в нумерованном списке
+	  //после добавления каждой записи все элементы становятся пустыми
+      task.value = ''
+	  date_postanovka_task.value = ''
+	  date_end_task.value = ''
+    } //конец оператора else (иначе)
+  })
+</script>
+</div>
+</html>
