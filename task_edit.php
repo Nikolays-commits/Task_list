@@ -89,7 +89,7 @@ print ("</table>");
 <td>
 <input type="submit" style="border-radius: 10px;" value="Подтвердить">
 </td>
-<td><button style="border-radius: 10px;"><a href="task_bd.php">Назад</a></button></td>
+<td><button style="border-radius: 10px;"><a href="index.php">Назад</a></button></td>
 </tr>
 </table>
 </form>
